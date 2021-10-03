@@ -224,7 +224,7 @@ PHONE_LOCATIONS:
   LOCATIONS_TO_USE: FUSED_RESAMPLED # ALL, GPS, ALL_RESAMPLED, OR FUSED_RESAMPLED
   FUSED_RESAMPLED_CONSECUTIVE_THRESHOLD: 30 # minutes, only replicate location samples to the next sensed bin if the phone did not stop collecting data for more than this threshold
   FUSED_RESAMPLED_TIME_SINCE_VALID_LOCATION: 720 # minutes, only replicate location samples to consecutive sensed bins if they were logged within this threshold after a valid location row
-  
+
   PROVIDERS:
     DORYAB:
       COMPUTE: True
@@ -535,6 +535,19 @@ HEATMAP_FEATURE_CORRELATION_MATRIX:
   CORR_METHOD: "pearson" # choose from {"pearson", "kendall", "spearman"}
 
 
+########################################################################################################################
+#                                                    Data Cleaning                                                     #
+########################################################################################################################
+
+DATA_CLEANING:
+  COMPUTE: True
+  COLS_NAN_THRESHOLD: 0.3
+  COLS_VAR_THRESHOLD: True
+  ROWS_NAN_THRESHOLD: 0.3
+  DATA_YIELDED_HOURS_RATIO_THRESHOLD: 0.75
+  CORR_VALID_PAIRS_THRESHOLD: 0.5
+  CORR_THRESHOLD: 0.95
+
 
 ########################################################################################################################
 #                                              Analysis Workflow Example                                               #
@@ -552,14 +565,6 @@ PARAMS_FOR_ANALYSIS:
   TARGET:
     FOLDER: data/external/example_workflow
     CONTAINER: participant_target.csv
-
-  # Cleaning Parameters
-  COLS_NAN_THRESHOLD: 0.3
-  COLS_VAR_THRESHOLD: True
-  ROWS_NAN_THRESHOLD: 0.3
-  DATA_YIELDED_HOURS_RATIO_THRESHOLD: 0.75
-  CORR_VALID_PAIRS_THRESHOLD: 0.5
-  CORR_THRESHOLD: 0.95
   
   MODEL_NAMES: [LogReg, kNN , SVM, DT, RF, GB, XGBoost, LightGBM]
   CV_METHODS: [LeaveOneOut]
